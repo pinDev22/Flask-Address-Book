@@ -1,7 +1,7 @@
 from app import app
 #python func to render templates from html
 from flask import render_template, flash, redirect, url_for
-from app.forms import SignupForm
+from app.forms import SignupForm, LoginForm
 from app.models import User
 @app.route('/')
 def index():
@@ -29,3 +29,14 @@ def signup():
         flash(f"Thank you {first_name} {last_name} for signing up", "success")
         return redirect(url_for('index'))
     return render_template('signup.html', form=form)
+@app.route("/login", methods=["POST"])
+def login():
+    form = LoginForm()
+    username = form.username.data
+    password = form.password.data
+
+    # Check if the login credentials are valid
+    if username == "admin" and password == "password":
+        return jsonify({"status": "success", "message": "Welcome, {}!".format(username)})
+    else:
+        return jsonify({"status": "error", "message": "Invalid login credentials"})
