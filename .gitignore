@@ -3,3 +3,4 @@ __pycache__
 venv
 # Ignore the environment variables
 .env
+app.db
